@@ -30,8 +30,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    
      // A user can have many posts.
      
     public function posts(): HasMany
