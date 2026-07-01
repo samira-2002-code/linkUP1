@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
 
     <style>
         .post {
@@ -68,4 +66,4 @@
         </div>
     @endforeach
 
-@endsection
+</x-app-layout>
