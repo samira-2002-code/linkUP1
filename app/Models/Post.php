@@ -11,15 +11,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['user_id', 'content'])]
 class Post extends Model
 {
-  
     use HasFactory;
 
-    
-     // A post belongs to a user.
-   
+    // Un post appartient à un utilisateur
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    // Un post possède plusieurs commentaires
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
