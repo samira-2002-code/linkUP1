@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 
+
 /*
 | HOME → LOGIN
 */
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
     ->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+    ->name('comments.destroy');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

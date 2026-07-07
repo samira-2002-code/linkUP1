@@ -160,9 +160,28 @@
 
                 {{-- LIST COMMENTS --}}
                 @foreach($post->comments as $comment)
+                @can('delete', $comment)
+                <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="margin-top:10px;">
+                    @csrf
+                    @method('DELETE')
+
+                    <button class="btn btn-danger" onclick="return confirm('Supprimer ce commentaire ?')">
+                        Delete
+                    </button>
+                </form>
+                @endcan
                 <div class="comment-box">
+
                     <strong>{{ $comment->user->name }}</strong>
-                    <p style="margin:0;">{{ $comment->content }}</p>
+
+                    <div style="color: gray; font-size: 13px;">
+                        {{ $comment->user->headline }}
+                    </div>
+
+                    <p style="margin-top: 5px;">
+                        {{ $comment->content }}
+                    </p>
+
                 </div>
                 @endforeach
 
