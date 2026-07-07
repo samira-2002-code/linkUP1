@@ -62,3 +62,8 @@ class PostController extends Controller
         return redirect()->route('feed');
     }
 }
+
+
+
+
+
