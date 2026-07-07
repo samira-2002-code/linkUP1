@@ -32,10 +32,6 @@
             font-size: 13px;
         }
 
-        .post-content {
-            margin-top: 10px;
-        }
-
         textarea {
             width: 100%;
             padding: 10px;
@@ -68,11 +64,18 @@
             background: red;
             color: white;
         }
+
+        .comment-box {
+            background: #f5f5f5;
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
     </style>
 
     <div class="max-w-3xl mx-auto py-6">
 
-        {{-- Create Post --}}
+        {{-- CREATE POST --}}
         <div class="post">
             <form action="{{ route('posts.store') }}" method="POST">
                 @csrf
@@ -92,16 +95,15 @@
             </form>
         </div>
 
-        {{-- Posts --}}
+        {{-- POSTS --}}
         @foreach ($posts as $post)
 
         <div class="post">
 
+            {{-- HEADER --}}
             <div class="post-header">
 
-                <img src="https://i.pravatar.cc/150?u={{ $post->user->id }}"
-                    class="w-10 h-10 rounded-full"
-                    alt="{{ $post->user->name }}">
+                <img src="https://i.pravatar.cc/150?u={{ $post->user->id }}">
 
                 <div class="post-author">
 
@@ -111,7 +113,6 @@
 
                     <div class="headline">
                         {{ $post->user->headline }}
-
                         @if($post->user->company)
                         • {{ $post->user->company }}
                         @endif
@@ -125,41 +126,67 @@
 
             </div>
 
+            {{-- CONTENT --}}
             <div class="post-content">
                 {{ $post->content }}
             </div>
 
             <br>
 
+            {{-- ACTIONS --}}
             @can('update', $post)
-            <a
-                href="{{ route('posts.edit', $post) }}"
-                class="btn-warning">
+            <a href="{{ route('posts.edit', $post) }}" class="btn-warning">
                 Edit
             </a>
             @endcan
 
             @can('delete', $post)
-
-            <form
-                action="{{ route('posts.destroy', $post) }}"
-                method="POST"
-                style="display:inline">
-
+            <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display:inline">
                 @csrf
                 @method('DELETE')
 
-                <button
-                    class="btn btn-danger"
-                    onclick="return confirm('Delete this post ?')">
-
+                <button class="btn btn-danger" onclick="return confirm('Delete this post ?')">
                     Delete
-
                 </button>
-
             </form>
-
             @endcan
+
+            <hr style="margin:15px 0;">
+            <div style="margin:10px 0; color:#666;">
+                💬 {{ $post->comments_count }} Comments
+            </div>
+            {{-- COMMENTS --}}
+            <div>
+
+                {{-- LIST COMMENTS --}}
+                @foreach($post->comments as $comment)
+                <div class="comment-box">
+                    <strong>{{ $comment->user->name }}</strong>
+                    <p style="margin:0;">{{ $comment->content }}</p>
+                </div>
+                @endforeach
+
+                {{-- ADD COMMENT --}}
+                <form action="{{ route('comments.store', $post) }}" method="POST" style="margin-top:10px;">
+                    @csrf
+
+                    <input
+                        type="text"
+                        name="content"
+                        placeholder="Write a comment..."
+                        style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px;">
+
+                    @error('content')
+                    <p style="color:red">{{ $message }}</p>
+                    @enderror
+
+                    <button class="btn btn-primary" style="margin-top:5px;">
+                        Comment
+                    </button>
+
+                </form>
+
+            </div>
 
         </div>
 

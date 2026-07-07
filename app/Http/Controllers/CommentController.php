@@ -17,9 +17,10 @@ class CommentController extends Controller
             'post_id' => $post->id,
         ]);
 
-        return back();
+       return back()->with('success', 'Commentaire ajouté');
     }
 }
+
 
 
 
