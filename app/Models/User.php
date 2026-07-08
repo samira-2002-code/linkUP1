@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Fillable(['name', 'email', 'password', 'headline', 'company', 'image_url'])]
 #[Hidden(['password', 'remember_token'])]
@@ -40,4 +41,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+    public function likes():HasMany{
+        return $this->hasMany(like::class);
+    }
+    public function likedPosts(): BelongsToMany
+{
+    return $this->belongsToMany(Post::class, 'likes');
+}
 }
