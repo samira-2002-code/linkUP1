@@ -133,6 +133,21 @@
 
             <br>
 
+            {{-- LIKES --}}
+            <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+
+                <form action="{{ route('likes.toggle', $post) }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="btn btn-primary">
+                        ❤️ Like
+                    </button>
+                </form>
+
+                <span>❤️ {{ $post->likes_count }} Likes</span>
+
+            </div>
+
             {{-- ACTIONS --}}
             @can('update', $post)
             <a href="{{ route('posts.edit', $post) }}" class="btn-warning">
@@ -170,6 +185,8 @@
                     </button>
                 </form>
                 @endcan
+                
+
                 <div class="comment-box">
 
                     <strong>{{ $comment->user->name }}</strong>

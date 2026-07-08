@@ -14,7 +14,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with(['user', 'comments.user'])
-            ->withCount('comments')
+            ->withCount('comments', 'likes')
             ->latest()
             ->get();
 
