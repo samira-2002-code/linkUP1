@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -60,6 +61,21 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('feed');
+    }
+    public function togglePin(Post $post)
+    {
+        $this->authorize('update', $post);
+
+        $post->is_pined = !$post->is_pined;
+        $post->save();
+
+        return redirect()->route('feed');
+    }
+    public function profile($id)
+    {
+        $user = User::findOrFail($id);
+        $posts = Post::where('user_id', $id)->get();
+        return view('profilee', compact("user", "posts"));
     }
 }
 

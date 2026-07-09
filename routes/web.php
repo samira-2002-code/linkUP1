@@ -42,7 +42,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/posts/{post}/like', [LikeController::class, 'toggle'])
     ->name('likes.toggle');
+
+    Route::post('/posts/{post}/pin', [PostController::class, 'togglePin'])
+    ->name('posts.togglePin');
 });
 
 require __DIR__.'/auth.php';
-
+Route::get('/profile/{id}', [PostController::class, 'profile'])->name('profile.show');

@@ -102,8 +102,9 @@
 
             {{-- HEADER --}}
             <div class="post-header">
-
+            <a href="{{ route('profile.show', $post->user->id) }}">
                 <img src="https://i.pravatar.cc/150?u={{ $post->user->id }}">
+            </a>
 
                 <div class="post-author">
 
