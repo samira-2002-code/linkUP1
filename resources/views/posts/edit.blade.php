@@ -1,36 +1,46 @@
 <x-app-layout>
 
-    <div class="max-w-xl mx-auto mt-10">
+<div class="max-w-2xl mx-auto py-10">
 
-        <div class="bg-white shadow rounded-lg p-6">
+    <div class="bg-white shadow-lg rounded-xl p-6">
 
-            <h2 class="text-xl font-bold mb-4">Edit Post</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            ✏️ Edit your post
+        </h2>
 
-            <form method="POST" action="{{ route('posts.update', $post) }}">
-                @csrf
-                @method('PUT')
+        <form method="POST" action="{{ route('posts.update', $post) }}">
+            @csrf
+            @method('PUT')
 
-                <textarea name="content"
-                          class="w-full border rounded p-3 focus:ring focus:outline-none"
-                          rows="5">{{ $post->content }}</textarea>
+            <textarea
+                name="content"
+                rows="6"
+                class="w-full border border-gray-300 rounded-lg p-4 focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Update your post...">{{ old('content', $post->content) }}</textarea>
 
-                @error('content')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
+            @error('content')
+                <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+            @enderror
 
-                <div class="flex justify-end mt-4">
-                    <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-                        Update Post
-                    </button>
-                </div>
+            <div class="flex justify-end gap-3 mt-6">
 
-            </form>
+                <a href="{{ route('feed') }}"
+                   class="px-5 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg text-gray-800 font-semibold">
+                    Cancel
+                </a>
 
-        </div>
+                <button
+                    type="submit"
+                    class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold">
+                    Update Post
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
+</div>
+
 </x-app-layout>
-
-
-

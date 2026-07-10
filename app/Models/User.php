@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+
 #[Fillable(['name', 'email', 'password', 'headline', 'company', 'image_url'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
@@ -41,11 +42,34 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
-    public function likes():HasMany{
+    public function likes(): HasMany
+    {
         return $this->hasMany(like::class);
     }
     public function likedPosts(): BelongsToMany
-{
-    return $this->belongsToMany(Post::class, 'likes');
-}
+    {
+        return $this->belongsToMany(Post::class, 'likes');
+    }
+
+    // Les personnes qui me suivent
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'follows',
+            'user_id',
+            'follower_id'
+        );
+    }
+
+    // Les personnes que je suis
+    public function following(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'follows',
+            'follower_id',
+            'user_id'
+        );
+    }
 }

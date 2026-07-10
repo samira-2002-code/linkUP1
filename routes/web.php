@@ -5,7 +5,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
-
+use App\Http\Controllers\NetworkController;
 
 /*
 | HOME → LOGIN
@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/posts/{post}/pin', [PostController::class, 'togglePin'])
     ->name('posts.togglePin');
+    
+    Route::post('/users/{user}/follow', [NetworkController::class, 'toggle'])
+    ->name('follow.toggle');
 });
 
 require __DIR__.'/auth.php';
